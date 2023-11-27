@@ -10,7 +10,9 @@ export default function HomePage() {
   const [page, setPage] = useState(0);
   const [secondData, setSecondData] = useState([]);
   const [money, setMoney] = useState([]);
-  const [search, setSearch] = useState("");
+  const [a, setA] = useState([]);
+  const [secondMoney, setSecondMoney] = useState([]);
+
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -58,24 +60,39 @@ export default function HomePage() {
         },
       })
       .then((response) => {
-        setSecondData(response.data.market_data.current_price);
+        {
+          // setSecondData(response.data.market_data.current_price);
+          const mappedArray = Object.entries(
+            response.data.market_data.current_price
+          );
+          setSecondData(mappedArray);
+          // let array = Object.values(response.data.market_data.current_price);
+          // console.log(array);
+          // setMoney(array);
+          // let keys = Object.keys(response.data.market_data.current_price);
+          // setSecondMoney(keys);
+          // setA(response.data.market_data.current_price);
+        }
       });
   }
+  console.log(a);
+  console.log(secondMoney);
+  console.log(money);
   useEffect(() => {
     getCoins();
     getUsd();
   }, [page]);
-  let array = [secondData];
-  // setMoney(data);
   console.log(data);
   console.log(secondData);
-  console.log(money);
+  console.log("object");
   return (
     <div className="container">
       <select>
-        {Array.isArray(secondData) &&
-          secondData.map((el, index) => <option key={index}>{el}</option>)}
+        {secondData.map(([el, index]) => (
+          <option value={index}>{el}</option>
+        ))}
       </select>
+
       {data.map((product) => (
         <Card coin={product} />
       ))}
@@ -91,3 +108,9 @@ export default function HomePage() {
     </div>
   );
 }
+
+// [
+//   ['key1', 'value1'],
+//   ['key2', 'value2'],
+//   ['key3', 'value3']
+// ]/OVO JE zapravo Object.entries on pristupa i key i value key je element a value je index
