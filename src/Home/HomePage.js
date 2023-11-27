@@ -9,6 +9,8 @@ export default function HomePage() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [secondData, setSecondData] = useState([]);
+  const [money, setMoney] = useState([]);
+  const [search, setSearch] = useState("");
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -38,13 +40,42 @@ export default function HomePage() {
       .then((response) => setData(response.data.data.coins));
   }
 
+  function getUsd() {
+    axios
+      .get(`https://coingecko.p.rapidapi.com/coins/bitcoin`, {
+        params: {
+          localization: "true",
+          tickers: "true",
+          market_data: "true",
+          community_data: "true",
+          developer_data: "true",
+          sparkline: "false",
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
+          "X-RapidAPI-Host": "coingecko.p.rapidapi.com",
+        },
+      })
+      .then((response) => {
+        setSecondData(response.data.market_data.current_price);
+      });
+  }
   useEffect(() => {
     getCoins();
+    getUsd();
   }, [page]);
+  let array = [secondData];
+  // setMoney(data);
   console.log(data);
   console.log(secondData);
+  console.log(money);
   return (
     <div className="container">
+      <select>
+        {Array.isArray(secondData) &&
+          secondData.map((el, index) => <option key={index}>{el}</option>)}
+      </select>
       {data.map((product) => (
         <Card coin={product} />
       ))}
