@@ -47,13 +47,17 @@ export default function HomePage() {
 
   return (
     <div className="container">
-      <button
-        onClick={() =>
-          setSelectedCurrency(selectedCurrency === "EUR" ? "USD" : "EUR")
-        }
-      >
-        {selectedCurrency == "USD" ? "promeni u EUR" : "promnei u USD"}
-      </button>
+      <select onChange={(e) => setSelectedCurrency(e.target.value)}>
+        <option>USD</option>
+        <option>EUR</option>
+        <option>GBP</option>
+        <option>AUD</option>
+        <option>CAD</option>
+        <option>CHF</option>
+        <option>CNY</option>
+        <option>INR</option>
+      </select>
+
       {data.map((product) => (
         <div className="card">
           <img src={product.iconUrl} alt={product.name} />
@@ -61,7 +65,23 @@ export default function HomePage() {
           <p style={{ fontWeight: "bold" }}>
             {selectedCurrency === "USD"
               ? `$ ${parseFloat(product.price).toFixed(1)}`
-              : `€ ${parseFloat(product.price * 0.91).toFixed(1)}`}
+              : selectedCurrency == "EUR"
+              ? `€ ${parseFloat(product.price * 0.90965).toFixed(1)}`
+              : selectedCurrency === "GBP"
+              ? `£ ${parseFloat(product.price * 0.78).toFixed(1)}`
+              : selectedCurrency === "JPY"
+              ? `¥ ${parseFloat(product.price * 113.71).toFixed(1)}`
+              : selectedCurrency === "AUD"
+              ? `A$ ${parseFloat(product.price * 1.36).toFixed(1)}`
+              : selectedCurrency === "CAD"
+              ? `C$ ${parseFloat(product.price * 1.26).toFixed(1)}`
+              : selectedCurrency === "CHF"
+              ? `CHF ${parseFloat(product.price * 0.93).toFixed(1)}`
+              : selectedCurrency === "CNY"
+              ? `CN¥ ${parseFloat(product.price * 6.38).toFixed(1)}`
+              : selectedCurrency === "INR"
+              ? `₹ ${parseFloat(product.price * 83.43).toFixed(1)}`
+              : "Nepoznata valuta"}
           </p>
         </div>
       ))}
