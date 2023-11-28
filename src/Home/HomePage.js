@@ -49,10 +49,10 @@ export default function HomePage() {
     <div className="container">
       <button
         onClick={() =>
-          setSelectedCurrency(selectedCurrency === "USD" ? "EUR" : "USD")
+          setSelectedCurrency(selectedCurrency === "EUR" ? "USD" : "EUR")
         }
       >
-        {selectedCurrency === "USD" ? "Prikaži u EUR" : "Prikaži u USD"}
+        {selectedCurrency == "USD" ? "promeni u EUR" : "promnei u USD"}
       </button>
       {data.map((product) => (
         <div className="card">
@@ -61,7 +61,7 @@ export default function HomePage() {
           <p style={{ fontWeight: "bold" }}>
             {selectedCurrency === "USD"
               ? `$ ${parseFloat(product.price).toFixed(1)}`
-              : `€ ${parseFloat(product.price * 0.85).toFixed(1)}`}
+              : `€ ${parseFloat(product.price * 0.91).toFixed(1)}`}
           </p>
         </div>
       ))}
