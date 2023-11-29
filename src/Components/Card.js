@@ -1,9 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./card.css";
 import { CartContext } from "../Context/Context";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { Tooltip } from "@mui/material";
+import axios from "axios";
+
 function Card({ coin }) {
   const { selectedCurrency } = useContext(CartContext);
-
+  const [chart, setChart] = useState([]);
+  const data = [
+    { name: "Jan", uv: 400, pv: 240 },
+    { name: "Feb", uv: 300, pv: 456 },
+    { name: "Mar", uv: 500, pv: 567 },
+    // Dodajte ostale mjesece i njihove vrijednosti ovdje
+  ];
+  function getCoins() {
+    axios
+      .get(`https://coingecko.p.rapidapi.com/coins/bitcoin/market_chart`, {
+        params: {
+          vs_currency: "usd",
+          days: "1",
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
+          "X-RapidAPI-Host": "coingecko.p.rapidapi.com",
+        },
+      })
+      .then((response) => setChart(response.data.data.coins));
+  }
+  useEffect(() => {
+    getCoins;
+  }, []);
+  console.log(chart);
   return (
     <div className="card">
       <img src={coin.iconUrl} alt={coin.name} />
@@ -52,6 +81,19 @@ function Card({ coin }) {
             : "Nepoznata valuta"}
         </p>
       </p>
+
+      <LineChart
+        width={100}
+        height={100}
+        data={data}
+        margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+      >
+        <XAxis dataKey="name" />
+        <Tooltip />
+        <CartesianGrid stroke="#f5f5f5" />
+        <Line type="monotone" dataKey="uv" stroke="#ff7300" yAxisId={0} />
+        <Line type="monotone" dataKey="pv" stroke="#387908" yAxisId={1} />
+      </LineChart>
     </div>
   );
 }
