@@ -29,6 +29,29 @@ function Card({ coin }) {
           ? `₹    ${parseFloat(coin.price * 83.43).toFixed(1)}`
           : "Nepoznata valuta"}
       </p>
+      <p>
+        <p style={{ fontWeight: "bold" }}>
+          {selectedCurrency === "USD"
+            ? `$ ${parseFloat(coin.marketCap).toFixed(1)}`
+            : selectedCurrency == "EUR"
+            ? `€ ${parseFloat(coin.marketCap * 0.90965).toFixed(1)}`
+            : selectedCurrency === "GBP"
+            ? `£ ${parseFloat(coin.marketCap * 0.78).toFixed(1)}`
+            : selectedCurrency === "JPY"
+            ? `¥ ${parseFloat(coin.marketCap * 113.71).toFixed(1)}`
+            : selectedCurrency === "AUD"
+            ? `A$  ${parseFloat(coin.marketCap * 1.36).toFixed(1)}`
+            : selectedCurrency === "CAD"
+            ? `C$  ${parseFloat(coin.marketCap * 1.26).toFixed(1)}`
+            : selectedCurrency === "CHF"
+            ? `CHF  ${parseFloat(coin.marketCap * 0.93).toFixed(1)}`
+            : selectedCurrency === "CNY"
+            ? `CN¥  ${parseFloat(coin.marketCap * 6.38).toFixed(1)}`
+            : selectedCurrency === "INR"
+            ? `₹    ${parseFloat(coin.marketCap * 83.43).toFixed(1)}`
+            : "Nepoznata valuta"}
+        </p>
+      </p>
     </div>
   );
 }

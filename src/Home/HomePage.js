@@ -45,6 +45,7 @@ export default function HomePage() {
     getCoins();
   }, [page, search]);
   console.log(changer);
+  console.log(data);
   return (
     <div className="container">
       <select className="select" onChange={changer}>
