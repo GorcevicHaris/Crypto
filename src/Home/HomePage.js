@@ -1,16 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./homepage.css";
 import Card from "../Components/Card";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Search } from "@mui/icons-material";
+import { CartContext } from "../Context/Context";
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState(0);
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-
+  const { setSelectedCurrency, changer } = useContext(CartContext);
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -44,10 +44,10 @@ export default function HomePage() {
   useEffect(() => {
     getCoins();
   }, [page, search]);
-
+  console.log(changer);
   return (
     <div className="container">
-      <select onChange={(e) => setSelectedCurrency(e.target.value)}>
+      <select className="select" onChange={changer}>
         <option>USD</option>
         <option>EUR</option>
         <option>GBP</option>
@@ -57,33 +57,8 @@ export default function HomePage() {
         <option>CNY</option>
         <option>INR</option>
       </select>
-
       {data.map((product) => (
-        <div className="card">
-          <img src={product.iconUrl} alt={product.name} />
-          <h3>{product.name}</h3>
-          <p style={{ fontWeight: "bold" }}>
-            {selectedCurrency === "USD"
-              ? `$ ${parseFloat(product.price).toFixed(1)}`
-              : selectedCurrency == "EUR"
-              ? `€ ${parseFloat(product.price * 0.90965).toFixed(1)}`
-              : selectedCurrency === "GBP"
-              ? `£ ${parseFloat(product.price * 0.78).toFixed(1)}`
-              : selectedCurrency === "JPY"
-              ? `¥ ${parseFloat(product.price * 113.71).toFixed(1)}`
-              : selectedCurrency === "AUD"
-              ? `A$ ${parseFloat(product.price * 1.36).toFixed(1)}`
-              : selectedCurrency === "CAD"
-              ? `C$ ${parseFloat(product.price * 1.26).toFixed(1)}`
-              : selectedCurrency === "CHF"
-              ? `CHF ${parseFloat(product.price * 0.93).toFixed(1)}`
-              : selectedCurrency === "CNY"
-              ? `CN¥ ${parseFloat(product.price * 6.38).toFixed(1)}`
-              : selectedCurrency === "INR"
-              ? `₹ ${parseFloat(product.price * 83.43).toFixed(1)}`
-              : "Nepoznata valuta"}
-          </p>
-        </div>
+        <Card coin={product} />
       ))}
       <Pagination
         sx={{ paddingTop: "20px" }}
