@@ -1,20 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import "./card.css";
 import { CartContext } from "../Context/Context";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import { Tooltip } from "@mui/material";
+import { BarChart } from "@mui/x-charts/BarChart";
 import axios from "axios";
-
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LineElement,
+  LinearScale,
+  PointElement,
+} from "chart.js";
+import { Line } from "recharts";
+ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 function Card({ coin }) {
   const { selectedCurrency } = useContext(CartContext);
   const [chart, setChart] = useState([]);
-  const data = [
-    { name: "Jan", uv: 400, pv: 240 },
-    { name: "Feb", uv: 300, pv: 456 },
-    { name: "Mar", uv: 500, pv: 567 },
-    // Dodajte ostale mjesece i njihove vrijednosti ovdje
-  ];
-  function getCoins() {
+
+  function getCo() {
     axios
       .get(`https://coingecko.p.rapidapi.com/coins/bitcoin/market_chart`, {
         params: {
@@ -27,11 +29,27 @@ function Card({ coin }) {
           "X-RapidAPI-Host": "coingecko.p.rapidapi.com",
         },
       })
-      .then((response) => setChart(response.data.data.coins));
+      .then((response) => setChart(response.data.prices));
   }
   useEffect(() => {
-    getCoins;
+    getCo();
   }, []);
+  //
+  const state = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [
+      {
+        label: "RainFall",
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        lineTension: 0.5,
+        borderColor: "green",
+        borderWidth: 2,
+        pointRadius: 0,
+      },
+    ],
+  };
+
   console.log(chart);
   return (
     <div className="card">
@@ -81,19 +99,20 @@ function Card({ coin }) {
             : "Nepoznata valuta"}
         </p>
       </p>
-
-      <LineChart
-        width={100}
-        height={100}
-        data={data}
-        margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-      >
-        <XAxis dataKey="name" />
-        <Tooltip />
-        <CartesianGrid stroke="#f5f5f5" />
-        <Line type="monotone" dataKey="uv" stroke="#ff7300" yAxisId={0} />
-        <Line type="monotone" dataKey="pv" stroke="#387908" yAxisId={1} />
-      </LineChart>
+      <div className="divline">
+        <Line
+          data={state}
+          options={{
+            scales: {
+              x: { grid: { display: false } },
+              y: {
+                grid: { borderDash: [10], color: "rgba(255,255,255,0.1);" },
+                ticks: { stepSize: 8 },
+              },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 }
