@@ -3,39 +3,21 @@ import "./card.css";
 import { CartContext } from "../Context/Context";
 import { BarChart } from "@mui/x-charts/BarChart";
 import axios from "axios";
+import { Line } from "react-chartjs-2";
+
 import {
   Chart as ChartJS,
-  CategoryScale,
   LineElement,
+  CategoryScale,
   LinearScale,
   PointElement,
 } from "chart.js";
-import { Line } from "recharts";
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 function Card({ coin }) {
   const { selectedCurrency } = useContext(CartContext);
-  const [chart, setChart] = useState([]);
 
-  function getCo() {
-    axios
-      .get(`https://coingecko.p.rapidapi.com/coins/bitcoin/market_chart`, {
-        params: {
-          vs_currency: "usd",
-          days: "1",
-        },
-        headers: {
-          "X-RapidAPI-Key":
-            "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
-          "X-RapidAPI-Host": "coingecko.p.rapidapi.com",
-        },
-      })
-      .then((response) => setChart(response.data.prices));
-  }
-  useEffect(() => {
-    getCo();
-  }, []);
   //
-  const state = {
+  let state = {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [
       {
@@ -46,11 +28,13 @@ function Card({ coin }) {
         borderColor: "green",
         borderWidth: 2,
         pointRadius: 0,
+        width: 400,
+        height: 400,
+        showLine: true,
       },
     ],
   };
 
-  console.log(chart);
   return (
     <div className="card">
       <img src={coin.iconUrl} alt={coin.name} />
@@ -106,7 +90,11 @@ function Card({ coin }) {
             scales: {
               x: { grid: { display: false } },
               y: {
-                grid: { borderDash: [10], color: "rgba(255,255,255,0.1);" },
+                grid: {
+                  borderDash: [10],
+                  color: "rgba(255,255,255,0.1);",
+                  backgroundColor: "rgba(255, 255, 255,10)",
+                },
                 ticks: { stepSize: 8 },
               },
             },
