@@ -15,14 +15,16 @@ import {
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 function Card({ coin }) {
   const { selectedCurrency } = useContext(CartContext);
-
-  //
+  const [history, setHistory] = useState([]);
+  const [maper, setMaper] = useState([]);
+  const Allspark = history.map((el) => el.sparkline.map((el) => el));
+  console.log(Allspark);
   let state = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "d"],
     datasets: [
       {
-        label: "RainFall",
-        data: [12, 19, 3, 5, 2, 3],
+        label: Allspark,
+        data: history.map((el, e) => el.sparkline.map((ele, index) => index)),
         fill: false,
         lineTension: 0.5,
         borderColor: "green",
@@ -34,7 +36,37 @@ function Card({ coin }) {
       },
     ],
   };
-
+  function getPriceHistory() {
+    axios
+      .get(`https://coinranking1.p.rapidapi.com/coins`, {
+        params: {
+          referenceCurrencyUuid: "yhjMzLPhuIDl",
+          timePeriod: "24h",
+          "tiers[0]": "1",
+          orderBy: "marketCap",
+          orderDirection: "desc",
+          limit: "50",
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
+          "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
+        },
+      })
+      .then((response) => {
+        setHistory(response.data.data.coins);
+        const somemaper = response.data.data.coins.map((el) => el.sparkline);
+        setMaper(somemaper);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }
+  console.log(maper);
+  useEffect(() => {
+    getPriceHistory();
+  }, []);
+  console.log(history);
   return (
     <div className="card">
       <img src={coin.iconUrl} alt={coin.name} />
@@ -92,10 +124,15 @@ function Card({ coin }) {
               y: {
                 grid: {
                   borderDash: [10],
-                  color: "rgba(255,255,255,0.1);",
+                  color: "rgba(255,255,255,0.1)",
                   backgroundColor: "rgba(255, 255, 255,10)",
                 },
                 ticks: { stepSize: 8 },
+              },
+            },
+            elements: {
+              line: {
+                tension: 0.4, // Promenite vrednost tension po potrebi
               },
             },
           }}

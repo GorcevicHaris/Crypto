@@ -19,7 +19,6 @@ img{
     width: 600px;
   height: 500px;
   display: flex;
-  padding: 10px;
   justify-content: space-around;
   margin: auto;
   align-items: flex-end;
