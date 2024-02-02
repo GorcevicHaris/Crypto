@@ -10,7 +10,7 @@ export default function HomePage() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState(0);
-  const { setSelectedCurrency, changer } = useContext(CartContext);
+  const { changer } = useContext(CartContext);
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -50,6 +50,7 @@ export default function HomePage() {
     <div className="container">
       <select className="select" onChange={changer}>
         <option>USD</option>
+        <option>YPY</option>
         <option>EUR</option>
         <option>GBP</option>
         <option>AUD</option>

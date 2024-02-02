@@ -17,21 +17,34 @@ function Card({ coin }) {
   const { selectedCurrency } = useContext(CartContext);
   const [history, setHistory] = useState([]);
   const [maper, setMaper] = useState([]);
-  const Allspark = history.map((el) => el.sparkline.map((el) => el));
-  console.log(Allspark);
+
+  console.log(maper);
   let state = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "d"],
+    labels: [
+      "monday",
+      "friday",
+      "sutarday",
+      "monday",
+      "friday",
+      "sutarday",
+      "monday",
+      "friday",
+      "sutarday",
+      "monday",
+      "friday",
+      "sutarday",
+    ],
     datasets: [
       {
-        label: Allspark,
-        data: history.map((el, e) => el.sparkline.map((ele, index) => index)),
+        label: "Rainfall",
+        data: maper[1],
         fill: false,
         lineTension: 0.5,
         borderColor: "green",
         borderWidth: 2,
         pointRadius: 0,
-        width: 400,
-        height: 400,
+        width: 300,
+        height: 300,
         showLine: true,
       },
     ],
@@ -66,6 +79,7 @@ function Card({ coin }) {
   useEffect(() => {
     getPriceHistory();
   }, []);
+  console.log(maper[0]);
   console.log(history);
   return (
     <div className="card">
@@ -74,7 +88,9 @@ function Card({ coin }) {
       <p style={{ fontWeight: "bold" }}>
         {selectedCurrency === "USD"
           ? `$ ${parseFloat(coin.price).toFixed(1)}`
-          : selectedCurrency == "EUR"
+          : selectedCurrency === "EUR"
+          ? `Yen ${parseFloat(coin.price).toFixed(1)}`
+          : selectedCurrency === "YPY"
           ? `€ ${parseFloat(coin.price * 0.90965).toFixed(1)}`
           : selectedCurrency === "GBP"
           ? `£ ${parseFloat(coin.price * 0.78).toFixed(1)}`
@@ -132,7 +148,7 @@ function Card({ coin }) {
             },
             elements: {
               line: {
-                tension: 0.4, // Promenite vrednost tension po potrebi
+                tension: 1,
               },
             },
           }}

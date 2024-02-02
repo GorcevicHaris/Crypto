@@ -16,8 +16,8 @@ img{
     width: 30px;
 }
 .divline{
-    width: 600px;
-  height: 500px;
+    width: 400px;
+  height: 200px;
   display: flex;
   justify-content: space-around;
   margin: auto;
