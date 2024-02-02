@@ -50,8 +50,8 @@ export default function HomePage() {
     <div className="container">
       <select className="select" onChange={changer}>
         <option>USD</option>
-        <option>YPY</option>
         <option>EUR</option>
+        <option>YEN</option>
         <option>GBP</option>
         <option>AUD</option>
         <option>CAD</option>

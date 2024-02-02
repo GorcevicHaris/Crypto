@@ -88,9 +88,7 @@ function Card({ coin }) {
       <p style={{ fontWeight: "bold" }}>
         {selectedCurrency === "USD"
           ? `$ ${parseFloat(coin.price).toFixed(1)}`
-          : selectedCurrency === "EUR"
-          ? `Yen ${parseFloat(coin.price).toFixed(1)}`
-          : selectedCurrency === "YPY"
+          : selectedCurrency == "EUR"
           ? `€ ${parseFloat(coin.price * 0.90965).toFixed(1)}`
           : selectedCurrency === "GBP"
           ? `£ ${parseFloat(coin.price * 0.78).toFixed(1)}`
@@ -106,7 +104,9 @@ function Card({ coin }) {
           ? `CN¥  ${parseFloat(coin.price * 6.38).toFixed(1)}`
           : selectedCurrency === "INR"
           ? `₹    ${parseFloat(coin.price * 83.43).toFixed(1)}`
-          : "Nepoznata valuta"}
+          : selectedCurrency === "YEN"
+          ? `YEN ${parseFloat(coin.price * 146.3236).toFixed(1)}`
+          : "Nepoznata Vrednost"}
       </p>
       <p>
         <p style={{ fontWeight: "bold" }}>
@@ -128,7 +128,9 @@ function Card({ coin }) {
             ? `CN¥  ${parseFloat(coin.marketCap * 6.38).toFixed(1)}`
             : selectedCurrency === "INR"
             ? `₹    ${parseFloat(coin.marketCap * 83.43).toFixed(1)}`
-            : "Nepoznata valuta"}
+            : selectedCurrency === "YEN"
+            ? `YEN ${parseFloat(coin.marketCap * 146.3236)}`
+            : "Nepoznata Vrednost"}
         </p>
       </p>
       <div className="divline">
