@@ -41,6 +41,7 @@ export default function HomePage() {
       .then((response) => setData(response.data.data.coins));
   }
 
+  console.log(data, "data");
   useEffect(() => {
     getCoins();
   }, [page, search]);
@@ -59,8 +60,8 @@ export default function HomePage() {
         <option>CNY</option>
         <option>INR</option>
       </select>
-      {data.map((product) => (
-        <Card coin={product} />
+      {data.map((product, index) => (
+        <Card coin={product} index={index} />
       ))}
       <Pagination
         sx={{ paddingTop: "20px" }}

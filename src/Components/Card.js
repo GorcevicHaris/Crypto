@@ -13,12 +13,11 @@ import {
   PointElement,
 } from "chart.js";
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
-function Card({ coin }) {
+function Card({ coin, index }) {
   const { selectedCurrency } = useContext(CartContext);
   const [history, setHistory] = useState([]);
   const [maper, setMaper] = useState([]);
 
-  console.log(maper);
   let state = {
     labels: [
       "monday",
@@ -33,11 +32,21 @@ function Card({ coin }) {
       "monday",
       "friday",
       "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
     ],
     datasets: [
       {
         label: "Rainfall",
-        data: maper[1],
+        data: coin.sparkline,
         fill: false,
         lineTension: 0.5,
         borderColor: "green",
@@ -49,38 +58,7 @@ function Card({ coin }) {
       },
     ],
   };
-  function getPriceHistory() {
-    axios
-      .get(`https://coinranking1.p.rapidapi.com/coins`, {
-        params: {
-          referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: "24h",
-          "tiers[0]": "1",
-          orderBy: "marketCap",
-          orderDirection: "desc",
-          limit: "50",
-        },
-        headers: {
-          "X-RapidAPI-Key":
-            "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
-          "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
-        },
-      })
-      .then((response) => {
-        setHistory(response.data.data.coins);
-        const somemaper = response.data.data.coins.map((el) => el.sparkline);
-        setMaper(somemaper);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }
-  console.log(maper);
-  useEffect(() => {
-    getPriceHistory();
-  }, []);
-  console.log(maper[0]);
-  console.log(history);
+
   return (
     <div className="card">
       <img src={coin.iconUrl} alt={coin.name} />
@@ -145,7 +123,7 @@ function Card({ coin }) {
                   color: "rgba(255,255,255,0.1)",
                   backgroundColor: "rgba(255, 255, 255,10)",
                 },
-                ticks: { stepSize: 8 },
+                ticks: { stepSize: 3 },
               },
             },
             elements: {
