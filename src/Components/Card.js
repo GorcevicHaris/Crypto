@@ -41,7 +41,7 @@ function Card({ coin, index }) {
       "sutarday",
       "sutarday",
       "sutarday",
-      "sutarday",
+      "sutar",
     ],
     datasets: [
       {
