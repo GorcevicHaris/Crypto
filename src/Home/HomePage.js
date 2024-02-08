@@ -59,6 +59,17 @@ export default function HomePage() {
         <option>CHF</option>
         <option>CNY</option>
         <option>INR</option>
+        <option>HKD</option>
+        <option>SGD</option>
+        <option>NZD</option>
+        <option>KRW</option>
+        <option>SEK</option>
+        <option>NOK</option>
+        <option>MXN</option>
+        <option>BRL</option>
+        <option>RUB</option>
+        <option>ZAR</option>
+        <option>TRY</option>
       </select>
       {data.map((product, index) => (
         <Card coin={product} index={index} />
@@ -66,7 +77,7 @@ export default function HomePage() {
       <Pagination
         sx={{ paddingTop: "20px" }}
         onChange={handlePageChange}
-        count={644}
+        count={673}
         variant="outlined"
         shape="rounded"
       />

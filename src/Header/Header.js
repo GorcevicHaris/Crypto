@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-
+import { Link, useNavigate } from "react-router-dom";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -52,10 +52,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar sx={{ bgcolor: "#FEDA15", paddingTop: "10px" }}>
+        <Toolbar
+          sx={{
+            bgcolor: "black",
+            paddingTop: "10px",
+            borderBottom: "1px solid white",
+          }}
+        >
           <IconButton
             size="large"
             edge="start"
@@ -71,7 +78,7 @@ export default function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            <Link to={"/"}>MUI</Link>
           </Typography>
           <Search>
             <SearchIconWrapper>
