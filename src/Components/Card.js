@@ -20,49 +20,11 @@ function Card({ coin, index }) {
   const [history, setHistory] = useState([]);
   const [maper, setMaper] = useState([]);
 
-  let state = {
-    labels: [
-      "monday",
-      "friday",
-      "sutarday",
-      "monday",
-      "friday",
-      "sutarday",
-      "monday",
-      "friday",
-      "sutarday",
-      "monday",
-      "friday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutarday",
-      "sutar",
-    ],
-    datasets: [
-      {
-        label: "Rainfall",
-        data: coin.sparkline,
-        fill: false,
-        lineTension: 0.5,
-        borderColor: "green",
-        borderWidth: 2,
-        pointRadius: 0,
-        width: 300,
-        height: 300,
-        showLine: true,
-      },
-    ],
-  };
-
   return (
-    <div onClick={() => navigate(`/chart/${coin.name}`, coin)} className="card">
+    <div
+      onClick={() => navigate(`/chart/${coin.name}`, { state: coin })}
+      className="card"
+    >
       <img src={coin.iconUrl} alt={coin.name} />
       <h3>{coin.name}</h3>
       <p style={{ fontWeight: "bold" }}>
@@ -157,29 +119,6 @@ function Card({ coin, index }) {
             : "Unknown Value"}
         </p>
       </p>
-      {/* <div className="divline">
-        <Line
-          data={state}
-          options={{
-            scales: {
-              x: { grid: { display: false } },
-              y: {
-                grid: {
-                  borderDash: [10],
-                  color: "rgba(255,255,255,0.1)",
-                  backgroundColor: "rgba(255, 255, 255,10)",
-                },
-                ticks: { stepSize: 3 },
-              },
-            },
-            elements: {
-              line: {
-                tension: 1,
-              },
-            },
-          }}
-        />
-      </div> */}
     </div>
   );
 }
