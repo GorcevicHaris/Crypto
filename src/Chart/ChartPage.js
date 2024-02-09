@@ -13,49 +13,47 @@ import {
   PointElement,
 } from "chart.js";
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
-let chartData = {
-  labels: [
-    "monday",
-    "friday",
-    "sutarday",
-    "monday",
-    "friday",
-    "sutarday",
-    "monday",
-    "friday",
-    "sutarday",
-    "monday",
-    "friday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutarday",
-    "sutar",
-  ],
-  datasets: [
-    {
-      label: "Rainfall",
-      data: "",
-      fill: false,
-      lineTension: 0.5,
-      borderColor: "green",
-      borderWidth: 2,
-      pointRadius: 0,
-      width: 300,
-      height: 300,
-      showLine: true,
-    },
-  ],
-};
 
-export default function ChartPage() {
+export default function ChartPage(product) {
   const { state } = useLocation();
+  let chartData = {
+    labels: [
+      "monday",
+      "friday",
+      "sutarday",
+      "monday",
+      "friday",
+      "sutarday",
+      "monday",
+      "friday",
+      "sutarday",
+      "monday",
+      "friday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+      "sutarday",
+    ],
+    datasets: [
+      {
+        label: "Line Dataset",
+        data: state.sparkline,
+        lineTension: 0.5,
+        borderColor: "green",
+        borderWidth: 1.5,
+        pointRadius: 2,
+        width: 300,
+        height: 300,
+        showLine: true,
+      },
+    ],
+  };
+  console.log(state, "state");
   return (
     <div className="chartContainer">
       <div className="divline">
@@ -65,11 +63,7 @@ export default function ChartPage() {
             scales: {
               x: { grid: { display: false } },
               y: {
-                grid: {
-                  borderDash: [10],
-                  color: "rgba(255,255,255,0.1)",
-                  backgroundColor: "rgba(255, 255, 255,10)",
-                },
+                grid: {},
                 ticks: { stepSize: 3 },
               },
             },
