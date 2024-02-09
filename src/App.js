@@ -3,6 +3,7 @@ import "./App.css";
 import HomePage from "./Home/HomePage";
 import Header from "./Header/Header";
 import Context from "./Context/Context";
+import ChartPage from "./Chart/ChartPage";
 function App() {
   return (
     <BrowserRouter>
@@ -10,6 +11,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/chart/:coinName" element={<ChartPage />} />
         </Routes>
       </Context>
     </BrowserRouter>

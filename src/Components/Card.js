@@ -12,9 +12,11 @@ import {
   LinearScale,
   PointElement,
 } from "chart.js";
+import { useNavigate } from "react-router-dom";
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 function Card({ coin, index }) {
   const { selectedCurrency } = useContext(CartContext);
+  const navigate = useNavigate();
   const [history, setHistory] = useState([]);
   const [maper, setMaper] = useState([]);
 
@@ -60,7 +62,7 @@ function Card({ coin, index }) {
   };
 
   return (
-    <div className="card">
+    <div onClick={() => navigate(`/chart/${coin.name}`, coin)} className="card">
       <img src={coin.iconUrl} alt={coin.name} />
       <h3>{coin.name}</h3>
       <p style={{ fontWeight: "bold" }}>
@@ -155,7 +157,7 @@ function Card({ coin, index }) {
             : "Unknown Value"}
         </p>
       </p>
-      <div className="divline">
+      {/* <div className="divline">
         <Line
           data={state}
           options={{
@@ -177,7 +179,7 @@ function Card({ coin, index }) {
             },
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

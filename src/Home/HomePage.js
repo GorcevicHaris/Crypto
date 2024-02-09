@@ -75,11 +75,10 @@ export default function HomePage() {
         <Card coin={product} index={index} />
       ))}
       <Pagination
-        sx={{ paddingTop: "20px" }}
         onChange={handlePageChange}
         count={673}
-        variant="outlined"
         shape="rounded"
+        classes={{ root: "paginationRoot" }}
       />
     </div>
   );

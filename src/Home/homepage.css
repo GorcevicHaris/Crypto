@@ -21,9 +21,19 @@
     height: 40px;
     overflow: hidden;
 }
-
+button{
+    background-color: white;
+    color: white;
+}
 .option *{
     height: 200px;
     width: 300px;
     background-color: red;
+}
+.paginationRoot button{
+    background-color: white;
+}
+.paginationRoot{
+    background-color: white;
+    width: auto;
 }
