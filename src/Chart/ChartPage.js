@@ -10,6 +10,7 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
+  Tooltip,
 } from "chart.js";
 import { Chart, ArcElement } from "chart.js";
 ChartJS.register(
@@ -17,7 +18,8 @@ ChartJS.register(
   PointElement,
   LinearScale,
   CategoryScale,
-  ArcElement
+  ArcElement,
+  Tooltip
 );
 
 export default function ChartPage(product) {
