@@ -17,8 +17,6 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 function Card({ coin, index }) {
   const { selectedCurrency } = useContext(CartContext);
   const navigate = useNavigate();
-  const [history, setHistory] = useState([]);
-  const [maper, setMaper] = useState([]);
 
   return (
     <div
