@@ -57,7 +57,7 @@ export default function ChartPage(product) {
       {
         label: "Bar Dataset",
         data: state.sparkline,
-        borderColor: "white",
+        borderColor: "green",
         borderWidth: 1.5,
         pointRadius: 0,
         width: 300,
@@ -162,28 +162,43 @@ export default function ChartPage(product) {
   console.log(state, "state");
   return (
     <div className="chartContainer">
-      <div className="divline">
-        <Line
-          data={lineChart}
-          options={{
-            plugins: {
-              tooltip: {
-                enabled: true,
+      <div className="topChartsContainer" style={{ background: "black" }}>
+        <div className="lineChartContainer" style={{ width: "60%" }}>
+          <Line
+            data={lineChart}
+            options={{
+              plugins: {
+                tooltip: {
+                  enabled: true,
+                },
               },
-            },
-            scales: {
-              x: { grid: { display: false, borderColor: "gray" } },
-              y: {
-                grid: {},
-                ticks: { stepSize: 3 },
+              scales: {
+                x: { grid: { display: false, borderColor: "gray" } },
+                y: {
+                  grid: {
+                    color: "gray",
+                  },
+                  ticks: { stepSize: 3 },
+                },
               },
-            },
-            elements: {},
-          }}
-        />
-        <Doughnut data={doughnutChart} />
+              elements: {
+                line: {
+                  borderColor: "white",
+                },
+              },
+            }}
+          />
+        </div>
+        <div className="doughnutChartContainer" style={{ width: "40%" }}>
+          <Doughnut data={doughnutChart} />
+        </div>
       </div>
-      <Bar data={barChart} />
+      <div
+        className="barChartContainer"
+        style={{ width: "100%", background: "black" }}
+      >
+        <Bar data={barChart} />
+      </div>
     </div>
   );
 }

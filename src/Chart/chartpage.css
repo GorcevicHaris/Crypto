@@ -3,20 +3,25 @@
     padding: 0;
     box-sizing: border-box;
 }
-.chartContainer{
-    padding-top: 10px;
-    height: auto;
-    width: 100vw;
+.chartContainer {
     display: flex;
     flex-direction: column;
-    background-color: black;
-}
-.divline{
-    width: 100%;
-    height: 50%;
-    display: flex;
-    justify-content: space-around;
-    margin: auto;
-    align-items: flex-end;
-}
+    align-items: center;
 
+  }
+  
+  .topChartsContainer {
+    display: flex;
+    width: 100%;
+  }
+  
+  .lineChartContainer,
+  .doughnutChartContainer {
+    padding: 10px;
+  }
+  
+  .barChartContainer {
+    width: 100%;
+    padding: 10px;
+  }
+  
