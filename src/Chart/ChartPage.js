@@ -57,14 +57,12 @@ export default function ChartPage(product) {
       {
         label: "Bar Dataset",
         data: state.sparkline,
-        lineTension: 0.5,
-        borderColor: "red",
+        borderColor: "white",
         borderWidth: 1.5,
         pointRadius: 0,
         width: 300,
         height: 300,
-        order: 2,
-        data: state.sparkline,
+        order: 10,
         showLine: true,
       },
     ],
@@ -174,7 +172,7 @@ export default function ChartPage(product) {
               },
             },
             scales: {
-              x: { grid: { display: false } },
+              x: { grid: { display: false, borderColor: "gray" } },
               y: {
                 grid: {},
                 ticks: { stepSize: 3 },
@@ -183,8 +181,8 @@ export default function ChartPage(product) {
             elements: {},
           }}
         />
+        <Doughnut data={doughnutChart} />
       </div>
-      <Doughnut data={doughnutChart} />
       <Bar data={barChart} />
     </div>
   );
