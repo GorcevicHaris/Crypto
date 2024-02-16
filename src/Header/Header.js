@@ -54,11 +54,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const navigate = useNavigate();
+  const [checker, setChecker] = React.useState(false);
   function loader() {
-    navigate("/");
-    <Box sx={{ display: "flex" }}>
-      <CircularProgress color="error" />
-    </Box>;
+    if (checker === false) {
+      setTimeout(() => {
+        navigate("/");
+        setChecker(true);
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress color="error" />
+        </Box>;
+      }, 2000);
+    } else {
+      navigate("/");
+    }
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
