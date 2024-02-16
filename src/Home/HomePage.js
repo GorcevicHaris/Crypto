@@ -3,9 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import "./homepage.css";
 import Card from "../Components/Card";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import { Search } from "@mui/icons-material";
 import { CartContext } from "../Context/Context";
+
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);

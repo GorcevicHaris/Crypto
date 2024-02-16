@@ -17,7 +17,6 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 function Card({ coin, index }) {
   const { selectedCurrency } = useContext(CartContext);
   const navigate = useNavigate();
-
   return (
     <div
       onClick={() => navigate(`/chart/${coin.name}`, { state: coin })}
@@ -25,7 +24,8 @@ function Card({ coin, index }) {
     >
       <img src={coin.iconUrl} alt={coin.name} />
       <h3>{coin.name}</h3>
-      <p style={{ fontWeight: "bold" }}>
+
+      <p>
         {selectedCurrency === "USD"
           ? `$ ${parseFloat(coin.price).toFixed(1)}`
           : selectedCurrency === "EUR"
@@ -70,8 +70,13 @@ function Card({ coin, index }) {
           ? `TRY ${parseFloat(coin.price * 12.24).toFixed(1)}`
           : "Unknown Value"}
       </p>
+      {coin.change > 0 ? (
+        <p style={{ color: "green" }}>{coin.change}%</p>
+      ) : (
+        <p style={{ color: "red" }}>{coin.change}%</p>
+      )}
       <p>
-        <p style={{ fontWeight: "bold" }}>
+        <p>
           {selectedCurrency === "USD"
             ? `$ ${parseFloat(coin.marketCap).toFixed(1)}`
             : selectedCurrency === "EUR"

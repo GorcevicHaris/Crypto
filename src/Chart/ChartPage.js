@@ -59,7 +59,7 @@ export default function ChartPage(product) {
         data: state.sparkline,
         borderColor: "green",
         borderWidth: 1.5,
-        pointRadius: 0,
+        pointRadius: 1,
         width: 300,
         height: 300,
         order: 10,
