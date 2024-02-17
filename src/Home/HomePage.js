@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import "./homepage.css";
 import Card from "../Components/Card";
 import Pagination from "@mui/material/Pagination";
@@ -7,9 +7,11 @@ import { CartContext } from "../Context/Context";
 
 export default function HomePage() {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [search, setSearch] = useState(0);
+  const [page, setPage] = useState(1); // Promijenjeno da stranice počinju od 1
+  const [search, setSearch] = useState("");
   const { changer } = useContext(CartContext);
+  const [sortOrder, setSortOrder] = useState("desc");
+
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -27,8 +29,7 @@ export default function HomePage() {
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
-          limit: "50",
-          offset: page,
+          limit: "650", // Povećajte limit da biste dobili sve podatke odjednom
           query: search,
         },
         headers: {
@@ -40,42 +41,46 @@ export default function HomePage() {
       .then((response) => setData(response.data.data.coins));
   }
 
-  console.log(data, "data");
+  function sortedByPrice() {
+    const sortedData = [...data];
+
+    const newSortOrder = sortOrder === "desc" ? "asc" : "desc";
+    setSortOrder(newSortOrder);
+
+    sortedData.sort((a, b) => {
+      return newSortOrder === "desc" ? a.price - b.price : b.price - a.price;
+    });
+
+    setData(sortedData);
+  }
+
   useEffect(() => {
     getCoins();
-  }, [page, search]);
-  console.log(changer);
-  console.log(data);
+  }, [search]);
+
+  // Funkcija za filtriranje podataka na temelju trenutne stranice
+  const filteredData = useMemo(() => {
+    const startIndex = (page - 1) * 50;
+    const endIndex = startIndex + 50;
+    return data.slice(startIndex, endIndex);
+  }, [data, page]);
+
   return (
     <div className="container">
-      <select className="select" onChange={changer}>
-        <option>USD</option>
-        <option>EUR</option>
-        <option>YEN</option>
-        <option>GBP</option>
-        <option>AUD</option>
-        <option>CAD</option>
-        <option>CHF</option>
-        <option>CNY</option>
-        <option>INR</option>
-        <option>HKD</option>
-        <option>SGD</option>
-        <option>NZD</option>
-        <option>KRW</option>
-        <option>SEK</option>
-        <option>NOK</option>
-        <option>MXN</option>
-        <option>BRL</option>
-        <option>RUB</option>
-        <option>ZAR</option>
-        <option>TRY</option>
-      </select>
-      {data.map((product, index) => (
+      {/* Ostatak JSX-a ostaje isti */}
+
+      <div className="sorted">
+        <h1> Name</h1>
+        <h1 onClick={sortedByPrice}>Price</h1>
+      </div>
+
+      {filteredData.map((product, index) => (
         <Card coin={product} index={index} />
       ))}
+
       <Pagination
         onChange={handlePageChange}
-        count={673}
+        count={Math.ceil(data.length / 50)} // Izračunajte ukupan broj stranica na temelju dobivenih podataka
         shape="rounded"
         classes={{ root: "paginationRoot" }}
       />

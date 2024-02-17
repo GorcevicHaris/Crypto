@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -54,20 +55,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const navigate = useNavigate();
-  const [checker, setChecker] = React.useState(false);
-  function loader() {
-    if (checker === false) {
-      setTimeout(() => {
-        navigate("/");
-        setChecker(true);
-        <Box sx={{ display: "flex" }}>
-          <CircularProgress color="error" />
-        </Box>;
-      }, 2000);
-    } else {
+  const [loading, setLoading] = React.useState(false);
+
+  const handleMUILinkClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
       navigate("/");
-    }
-  }
+    }, 0); // Adjust the time as per your requirement
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -93,7 +90,9 @@ export default function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            <p onClick={loader}>MUI</p>
+            <p style={{ cursor: "pointer" }} onClick={handleMUILinkClick}>
+              MUI
+            </p>
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -104,6 +103,24 @@ export default function Header() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          {loading && (
+            <Box
+              sx={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                bgcolor: "rgba(0, 0, 0, 0.5)",
+                zIndex: 9999,
+              }}
+            >
+              <CircularProgress color="inherit" />
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
