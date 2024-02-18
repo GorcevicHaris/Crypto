@@ -29,7 +29,7 @@ export default function HomePage() {
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
-          limit: "650", // Povećajte limit da biste dobili sve podatke odjednom
+          limit: "650",
           query: search,
         },
         headers: {
@@ -43,12 +43,11 @@ export default function HomePage() {
 
   function sortedByPrice() {
     const sortedData = [...data];
-    setSortOrder(sortOrder === "desc" ? "arc" : "desc");
-    sortedData.sort((a, b) => {
+    setSortOrder(sortOrder === "desc" ? "asc " : "desc");
+    const sorting = sortedData.sort((a, b) => {
       return sortOrder === "desc" ? a.price - b.price : b.price - a.price;
     });
-
-    setData(sortedData);
+    setData(sorting);
   }
 
   useEffect(() => {
@@ -56,10 +55,13 @@ export default function HomePage() {
   }, [search]);
 
   const filteredData = useMemo(() => {
-    const startIndex = (page - 1) * 50;
-    const endIdex = page * 50;
-    return data.slice(startIndex, endIdex);
+    const firstIndex = (page - 1) * 50;
+    const seconIndex = page * 50;
+    return data.slice(firstIndex, seconIndex);
   }, [data, page]);
+
+  console.log(page, "page");
+  console.log(filteredData, "filtereddata");
 
   return (
     <div className="container">
@@ -98,7 +100,7 @@ export default function HomePage() {
 
       <Pagination
         onChange={handlePageChange}
-        count={Math.ceil(data.length / 50)} // Izračunajte ukupan broj stranica na temelju dobivenih podataka
+        count={data.length / 50}
         shape="rounded"
         classes={{ root: "paginationRoot" }}
       />
