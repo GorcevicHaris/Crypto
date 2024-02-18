@@ -43,9 +43,7 @@ export default function HomePage() {
 
   function sortedByPrice() {
     const sortedData = [...data];
-
-    setSortOrder(sortOrder == "desc" ? "asc" : "desc");
-
+    setSortOrder(sortOrder === "desc" ? "arc" : "desc");
     sortedData.sort((a, b) => {
       return sortOrder === "desc" ? a.price - b.price : b.price - a.price;
     });
@@ -57,10 +55,10 @@ export default function HomePage() {
     getCoins();
   }, [search]);
 
-  // Funkcija za filtriranje podataka na temelju trenutne stranice
   const filteredData = useMemo(() => {
     const startIndex = (page - 1) * 50;
-    return data.slice(startIndex, 50);
+    const endIdex = page * 50;
+    return data.slice(startIndex, endIdex);
   }, [data, page]);
 
   return (
