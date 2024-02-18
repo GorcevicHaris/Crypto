@@ -6,12 +6,11 @@ import Pagination from "@mui/material/Pagination";
 import { CartContext } from "../Context/Context";
 
 export default function HomePage() {
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1); // Promijenjeno da stranice počinju od 1
-  const [search, setSearch] = useState("");
-  const { changer } = useContext(CartContext);
+  const [select, setSelect] = useState("");
+  const { changer, data, setData, search } = useContext(CartContext);
   const [sortOrder, setSortOrder] = useState("desc");
-
+  const [fakeData, setFakeData] = useState([]);
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -30,7 +29,7 @@ export default function HomePage() {
           orderBy: "marketCap",
           orderDirection: "desc",
           limit: "650",
-          query: search,
+          query: select,
         },
         headers: {
           "X-RapidAPI-Key":
@@ -38,7 +37,10 @@ export default function HomePage() {
           "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
         },
       })
-      .then((response) => setData(response.data.data.coins));
+      .then((response) => {
+        setData(response.data.data.coins);
+        setFakeData(response.data.coins);
+      });
   }
 
   function sortedByPrice() {
@@ -52,7 +54,7 @@ export default function HomePage() {
 
   useEffect(() => {
     getCoins();
-  }, [search]);
+  }, [select]);
 
   function sortedByChange() {
     const sortedData = [...data];
@@ -87,8 +89,10 @@ export default function HomePage() {
   const filteredData = useMemo(() => {
     const firstIndex = (page - 1) * 50;
     const secondIndex = page * 50;
-    return data.slice(firstIndex, secondIndex);
-  }, [data, page]);
+    const searchData = data.filter((el) => el.name.includes(search));
+    return searchData.slice(firstIndex, secondIndex);
+  }, [data, page, search]);
+
   console.log(page, "page");
   console.log(filteredData, "filtereddata");
 
@@ -143,7 +147,6 @@ export default function HomePage() {
           </h1>
         </div>
       </div>
-
       {filteredData.map((product, index) => (
         <Card coin={product} index={index} />
       ))}

@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import { CartContext } from "../Context/Context";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,6 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
+  const { search, setSearch } = React.useContext(CartContext);
 
   const handleMUILinkClick = () => {
     setLoading(true);
@@ -65,6 +67,9 @@ export default function Header() {
     }, 0); // Adjust the time as per your requirement
   };
 
+  function onHandle(e) {
+    setSearch(e.target.value);
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -90,8 +95,11 @@ export default function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            <p style={{ cursor: "pointer" }} onClick={handleMUILinkClick}>
-              MUI
+            <p
+              style={{ cursor: "pointer", letterSpacing: "2px" }}
+              onClick={handleMUILinkClick}
+            >
+              Crytpo Tracker
             </p>
           </Typography>
           <Search>
@@ -100,6 +108,8 @@ export default function Header() {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
+              value={search}
+              onChange={onHandle}
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
