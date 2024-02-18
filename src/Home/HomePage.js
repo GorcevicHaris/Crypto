@@ -54,12 +54,41 @@ export default function HomePage() {
     getCoins();
   }, [search]);
 
+  function sortedByChange() {
+    const sortedData = [...data];
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
+    const sorting = sortedData.sort((a, b) => {
+      return sortOrder === "desc" ? a.change - b.change : b.change - a.change;
+    });
+    setData(sorting);
+  }
+  function sortedBy24hVolume() {
+    const sortedData = [...data];
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
+    const sorting = sortedData.sort((a, b) => {
+      const volumeA = parseFloat(a["24hVolume"]);
+      const volumeB = parseFloat(b["24hVolume"]);
+      return sortOrder === "desc" ? volumeA - volumeB : volumeB - volumeA;
+    });
+    setData(sorting);
+  }
+
+  function sortedByMarktetCap() {
+    const sortedData = [...data];
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
+    const sorting = sortedData.sort((a, b) => {
+      return sortOrder === "desc"
+        ? a.marketCap - b.marketCap
+        : b.marketCap - a.marketCap;
+    });
+    setData(sorting);
+  }
+
   const filteredData = useMemo(() => {
     const firstIndex = (page - 1) * 50;
-    const seconIndex = page * 50;
-    return data.slice(firstIndex, seconIndex);
+    const secondIndex = page * 50;
+    return data.slice(firstIndex, secondIndex);
   }, [data, page]);
-
   console.log(page, "page");
   console.log(filteredData, "filtereddata");
 
@@ -92,6 +121,9 @@ export default function HomePage() {
       <div className="sorted">
         <h1> Name</h1>
         <h1 onClick={sortedByPrice}>Price</h1>
+        <h1 onClick={sortedByChange}>Change</h1>
+        <h1 onClick={sortedBy24hVolume}>24hVolume</h1>
+        <h1 onClick={sortedByMarktetCap}>marketCap</h1>
       </div>
 
       {filteredData.map((product, index) => (
