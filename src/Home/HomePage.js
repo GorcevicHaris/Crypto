@@ -44,11 +44,10 @@ export default function HomePage() {
   function sortedByPrice() {
     const sortedData = [...data];
 
-    const newSortOrder = sortOrder === "desc" ? "asc" : "desc";
-    setSortOrder(newSortOrder);
+    setSortOrder(sortOrder == "desc" ? "asc" : "desc");
 
     sortedData.sort((a, b) => {
-      return newSortOrder === "desc" ? a.price - b.price : b.price - a.price;
+      return sortOrder === "desc" ? a.price - b.price : b.price - a.price;
     });
 
     setData(sortedData);
@@ -61,13 +60,34 @@ export default function HomePage() {
   // Funkcija za filtriranje podataka na temelju trenutne stranice
   const filteredData = useMemo(() => {
     const startIndex = (page - 1) * 50;
-    const endIndex = startIndex + 50;
-    return data.slice(startIndex, endIndex);
+    return data.slice(startIndex, 50);
   }, [data, page]);
 
   return (
     <div className="container">
-      {/* Ostatak JSX-a ostaje isti */}
+      <select className="select" onChange={changer}>
+        <option>USD</option>
+        <option>EUR</option>
+        <option>YEN</option>
+        <option>GBP</option>
+        <option>AUD</option>
+        <option>CAD</option>
+        <option>CHF</option>
+        <option>CNY</option>
+        <option>INR</option>
+        <option>HKD</option>
+        <option>SGD</option>
+        <option>NZD</option>
+        <option>KRW</option>
+        <option>SEK</option>
+        <option>NOK</option>
+        <option>MXN</option>
+        <option>BRL</option>
+        <option>RUB</option>
+        <option>ZAR</option>
+        <option>TRY</option>
+      </select>
+      <></>
 
       <div className="sorted">
         <h1> Name</h1>
