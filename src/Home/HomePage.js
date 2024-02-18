@@ -119,11 +119,21 @@ export default function HomePage() {
       <></>
 
       <div className="sorted">
-        <h1> Name</h1>
-        <h1 onClick={sortedByPrice}>Price</h1>
-        <h1 onClick={sortedByChange}>Change</h1>
-        <h1 onClick={sortedBy24hVolume}>24hVolume</h1>
-        <h1 onClick={sortedByMarktetCap}>marketCap</h1>
+        <div className="same">
+          <h1> Name</h1>
+        </div>
+        <div className="same">
+          <h1 onClick={sortedByPrice}>Price</h1>
+        </div>
+        <div className="same">
+          <h1 onClick={sortedByChange}>24h Change</h1>
+        </div>
+        <div className="same">
+          <h1 onClick={sortedBy24hVolume}>24hVolume</h1>
+        </div>
+        <div className="same">
+          <h1 onClick={sortedByMarktetCap}>marketCap</h1>
+        </div>
       </div>
 
       {filteredData.map((product, index) => (

@@ -38,13 +38,17 @@ button{
     width: auto;
 }
 .sorted{
-    background-color: red;
     width: 100%;
     display: flex;
-    padding-left: 10%;
-    gap: 20px;
+    height: 60px;
 }
 h1{
     font-weight: 100;
-    font-size: 23px
+    font-size: 23px;
+    color: white;
+}
+.same{
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
 }
