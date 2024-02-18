@@ -32,7 +32,7 @@ function Card({ coin, index }) {
           {selectedCurrency === "USD"
             ? `$ ${parseFloat(coin.price).toFixed(1)}`
             : selectedCurrency === "EUR"
-            ? `€ ${parseFloat(coin.price * 0.90965).toFixed(1)}`
+            ? `€ ${parseFloat(coin.price * 0.9287).toFixed(1)}`
             : selectedCurrency === "GBP"
             ? `£ ${parseFloat(coin.price * 0.78).toFixed(1)}`
             : selectedCurrency === "JPY"

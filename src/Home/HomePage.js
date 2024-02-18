@@ -148,7 +148,9 @@ export default function HomePage() {
         </div>
       </div>
       {filteredData.map((product, index) => (
-        <Card coin={product} index={index} />
+        <>
+          <Card coin={product} index={index} />
+        </>
       ))}
 
       <Pagination
