@@ -34,6 +34,8 @@ export default function HomePage() {
       timePeriod = "1y";
     } else if (select === "5y") {
       timePeriod = "5y";
+    } else if (select === "3h") {
+      timePeriod = "3h";
     }
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
@@ -113,6 +115,7 @@ export default function HomePage() {
   return (
     <div className="container">
       <select className="select" onChange={handleSelectChange}>
+        <option value={"3h"}>3h</option>
         <option value="24h">24h</option>
         <option value="7d">7d</option>
         <option value="30d">30d</option>
@@ -155,8 +158,8 @@ export default function HomePage() {
         </div>
         <div className="same">
           <h1 className="cursor" onClick={sortedByChange}>
-            {select === "24h" ? (
-              <span>24h Change</span>
+            {select === "3h" ? (
+              <span>3h Change</span>
             ) : select === "7d" ? (
               <span>7d Change</span>
             ) : select === "30d" ? (
@@ -169,8 +172,10 @@ export default function HomePage() {
               <span>3y Change</span>
             ) : select === "5y" ? (
               <span>5y Change</span>
-            ) : (
+            ) : select === "24h" ? (
               <span>24h Change</span>
+            ) : (
+              <span>3h Change</span>
             )}
           </h1>
         </div>
