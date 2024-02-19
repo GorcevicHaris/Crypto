@@ -170,21 +170,22 @@ export default function ChartPage(product) {
     ];
   } else if (period === "1y") {
     labels = [
-      "day33,",
-      "day66,",
-      "day99,",
-      "day132,",
-      "day165,",
-      "day198,",
-      "day231,",
-      "day264,",
-      "day297,",
-      "day330,",
-      "day363,",
+      "day30",
+      "day60",
+      "day90",
+      "day120",
+      "day150",
+      "day180",
+      "day210",
+      "day240",
+      "day270",
+      "day300",
+      "day330",
+      "day360",
     ];
   } else if (period === "3y") {
     labels = [
-      "day31,",
+      "day31",
       "day62,",
       "day93,",
       "day124,",

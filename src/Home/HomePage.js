@@ -8,8 +8,7 @@ import { CartContext } from "../Context/Context";
 export default function HomePage() {
   const [page, setPage] = useState(1);
   const [select, setSelect] = useState("");
-  const { changer, data, setData, search, period, setPeriod } =
-    useContext(CartContext);
+  const { changer, data, setData, search, setPeriod } = useContext(CartContext);
   const [sortOrder, setSortOrder] = useState("desc");
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -36,12 +35,15 @@ export default function HomePage() {
       timePeriod = "5y";
     } else if (select === "3h") {
       timePeriod = "3h";
+    } else if (timePeriod === "3y") {
+      timePeriod = "3y";
     }
+
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
           referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: timePeriod, //time perio ce biti neki podaci njihovi koje cemo koristiti kao stejt ali sa nekim podacima kao sto su 24h,3d itd
+          timePeriod: timePeriod, //time period ce biti neki podaci njihovi koje cemo koristiti kao stejt ali sa nekim podacima kao sto su 24h,3d itd
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
@@ -61,13 +63,12 @@ export default function HomePage() {
   }
   function sortedByPrice() {
     const sortedData = [...data];
-    setSortOrder(sortOrder === "desc" ? "asc " : "desc");
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
     const sorting = sortedData.sort((a, b) => {
       return sortOrder === "desc" ? a.price - b.price : b.price - a.price;
     });
     setData(sorting);
   }
-
   useEffect(() => {
     getCoins();
   }, [select]);
@@ -105,22 +106,22 @@ export default function HomePage() {
   const filteredData = useMemo(() => {
     const firstIndex = (page - 1) * 50;
     const secondIndex = page * 50;
-    const searchData = data.filter((el) => el.name.includes(search));
+    const searchData = data.filter((data) => data.name.includes(search));
     return searchData.slice(firstIndex, secondIndex);
   }, [data, page, search]);
-
   console.log(page, "page");
   console.log(filteredData, "filtereddata");
 
   return (
     <div className="container">
       <select className="select" onChange={handleSelectChange}>
-        <option value={"3h"}>3h</option>
+        <option value="3h">3h</option>
         <option value="24h">24h</option>
         <option value="7d">7d</option>
         <option value="30d">30d</option>
         <option value="3m">3m</option>
         <option value="1y">1y</option>
+        <option value="3y">3y</option>
         <option value="5y">5y</option>
       </select>
       ;
