@@ -6,11 +6,11 @@ import Pagination from "@mui/material/Pagination";
 import { CartContext } from "../Context/Context";
 
 export default function HomePage() {
-  const [page, setPage] = useState(1); // Promijenjeno da stranice počinju od 1
+  const [page, setPage] = useState(1);
   const [select, setSelect] = useState("");
-  const { changer, data, setData, search } = useContext(CartContext);
+  const { changer, data, setData, search, period, setPeriod } =
+    useContext(CartContext);
   const [sortOrder, setSortOrder] = useState("desc");
-  const [fakeData, setFakeData] = useState([]);
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -19,21 +19,27 @@ export default function HomePage() {
     });
   };
   const handleSelectChange = (event) => {
-    const selectedValue = event.target.value; // Dobijemo odabranu vrijednost iz select elementa
-    setSelect(selectedValue); // Ažuriramo stanje select s odabranom vrijednošću
+    setSelect(event.target.value);
   };
 
   function getCoins() {
-    let timePeriod = "24h"; // Postavite početni vremenski period na 24h
+    let timePeriod = "24h";
     if (select === "30d") {
-      timePeriod = "30d"; // Ako je odabran vremenski period 5 godina, postavite ga na 30d
+      timePeriod = "30d";
+    } else if (select === "7d") {
+      timePeriod = "7d";
+    } else if (select === "3m") {
+      timePeriod = "3m";
+    } else if (select === "1y") {
+      timePeriod = "1y";
+    } else if (select === "5y") {
+      timePeriod = "5y";
     }
-
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
           referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: timePeriod, // Koristite odabrani vremenski period
+          timePeriod: timePeriod, //time perio ce biti neki podaci njihovi koje cemo koristiti kao stejt ali sa nekim podacima kao sto su 24h,3d itd
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
@@ -48,7 +54,7 @@ export default function HomePage() {
       })
       .then((response) => {
         setData(response.data.data.coins);
-        setFakeData(response.data.coins);
+        setPeriod(timePeriod);
       });
   }
   function sortedByPrice() {
@@ -108,7 +114,11 @@ export default function HomePage() {
     <div className="container">
       <select className="select" onChange={handleSelectChange}>
         <option value="24h">24h</option>
+        <option value="7d">7d</option>
         <option value="30d">30d</option>
+        <option value="3m">3m</option>
+        <option value="1y">1y</option>
+        <option value="5y">5y</option>
       </select>
       ;
       <select className="select" onChange={changer}>
@@ -145,7 +155,23 @@ export default function HomePage() {
         </div>
         <div className="same">
           <h1 className="cursor" onClick={sortedByChange}>
-            24h Change
+            {select === "24h" ? (
+              <span>24h Change</span>
+            ) : select === "7d" ? (
+              <span>7d Change</span>
+            ) : select === "30d" ? (
+              <span>30d Change</span>
+            ) : select === "3m" ? (
+              <span>3m Change</span>
+            ) : select === "1y" ? (
+              <span>1y Change</span>
+            ) : select === "3y" ? (
+              <span>3y Change</span>
+            ) : select === "5y" ? (
+              <span>5y Change</span>
+            ) : (
+              <span>24h Change</span>
+            )}
           </h1>
         </div>
         <div className="same">

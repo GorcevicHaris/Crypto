@@ -4,7 +4,7 @@ function Context({ children }) {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
-
+  const [period, setPeriod] = useState();
   return (
     <CartContext.Provider
       value={{
@@ -15,6 +15,8 @@ function Context({ children }) {
         setSearch,
         data,
         setData,
+        period,
+        setPeriod,
       }}
     >
       {children}
