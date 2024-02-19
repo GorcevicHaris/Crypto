@@ -18,13 +18,22 @@ export default function HomePage() {
       behavior: "auto",
     });
   };
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value; // Dobijemo odabranu vrijednost iz select elementa
+    setSelect(selectedValue); // Ažuriramo stanje select s odabranom vrijednošću
+  };
 
   function getCoins() {
+    let timePeriod = "24h"; // Postavite početni vremenski period na 24h
+    if (select === "30d") {
+      timePeriod = "30d"; // Ako je odabran vremenski period 5 godina, postavite ga na 30d
+    }
+
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
           referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: "24h",
+          timePeriod: timePeriod, // Koristite odabrani vremenski period
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
@@ -42,7 +51,6 @@ export default function HomePage() {
         setFakeData(response.data.coins);
       });
   }
-
   function sortedByPrice() {
     const sortedData = [...data];
     setSortOrder(sortOrder === "desc" ? "asc " : "desc");
@@ -98,6 +106,11 @@ export default function HomePage() {
 
   return (
     <div className="container">
+      <select className="select" onChange={handleSelectChange}>
+        <option value="24h">24h</option>
+        <option value="30d">30d</option>
+      </select>
+      ;
       <select className="select" onChange={changer}>
         <option>USD</option>
         <option>EUR</option>
@@ -121,7 +134,6 @@ export default function HomePage() {
         <option>TRY</option>
       </select>
       <></>
-
       <div className="sorted">
         <div className="same">
           <h1 className="cursor"> Name</h1>
@@ -152,7 +164,6 @@ export default function HomePage() {
           <Card coin={product} index={index} />
         </>
       ))}
-
       <Pagination
         onChange={handlePageChange}
         count={data.length / 50}
