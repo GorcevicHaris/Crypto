@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./convertor.css";
 import axios from "axios";
 export default function Convertor() {
@@ -6,9 +6,14 @@ export default function Convertor() {
   function getData() {
     axios
       .get(`https://api.exchangeratesapi.io/latest`)
-      .then((response) => response.data)
+      .then((response) => setData(response.data))
       .catch((error) => console.log(error));
   }
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log(data);
+
   return (
     <div className="convertDiv">
       <div className="centerDiv">

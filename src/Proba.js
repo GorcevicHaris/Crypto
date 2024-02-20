@@ -1,50 +1,84 @@
-import React, { useMemo, useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function ExampleComponent({ data }) {
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+function CryptoConverter() {
+  const [amount, setAmount] = useState("");
+  const [selectedCrypto, setSelectedCrypto] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("usd");
+  const [cryptos, setCryptos] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
+  const [result, setResult] = useState("");
 
-  // Filtriranje podataka
-  const filteredData = useMemo(() => {
-    if (!data || !Array.isArray(data)) return []; // Provjeravamo da li je data definisan i da li je niz
-    // Filter data based on search term
-    return data.filter((item) => item.name.includes(search));
-  }, [data, search]);
+  useEffect(() => {
+    fetch("https://api.coingecko.com/api/v3/coins/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter out the coins from CoinGecko's list
+        const filteredCryptos = data.filter((coin) => coin.id);
+        setCryptos(filteredCryptos);
+      });
 
-  // Paginacija
-  const paginatedData = useMemo(() => {
-    const firstIndex = (page - 1) * 10;
-    const secondIndex = page * 10;
-    return filteredData.slice(firstIndex, secondIndex);
-  }, [filteredData, page]);
+    fetch("https://api.coingecko.com/api/v3/simple/supported_vs_currencies")
+      .then((response) => response.json())
+      .then((data) => setCurrencies(data));
+  }, []);
+
+  const convertCurrency = () => {
+    if (selectedCrypto && amount) {
+      fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${selectedCrypto}&vs_currencies=${selectedCurrency}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const rate = parseFloat(data[selectedCrypto][selectedCurrency]);
+          const convertedAmount = parseFloat(amount) * rate;
+          setResult(convertedAmount.toFixed(2));
+        });
+    } else {
+      console.error("Please select a cryptocurrency and enter an amount.");
+    }
+  };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search..."
-      />
-      <ul>
-        {paginatedData.map((item) => (
-          <li key={item.id}>{item.name}</li>
+    <div className="container">
+      <h1>Crypto Converter</h1>
+      <select
+        value={selectedCrypto}
+        onChange={(e) => setSelectedCrypto(e.target.value)}
+      >
+        <option value="">Select Cryptocurrency</option>
+        {cryptos.map((crypto) => (
+          <option key={crypto.id} value={crypto.id}>
+            {crypto.name}
+          </option>
         ))}
-      </ul>
-      <button
-        onClick={() => setPage((prevPage) => prevPage - 1)}
-        disabled={page === 1}
+      </select>
+      <br />
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter amount"
+      />
+      <br />
+      <select
+        value={selectedCurrency}
+        onChange={(e) => setSelectedCurrency(e.target.value)}
       >
-        Previous
-      </button>
-      <button
-        onClick={() => setPage((prevPage) => prevPage + 1)}
-        disabled={paginatedData.length < 10}
-      >
-        Next
-      </button>
+        {currencies.map((currency) => (
+          <option key={currency} value={currency}>
+            {currency.toUpperCase()}
+          </option>
+        ))}
+      </select>
+      <br />
+      <button onClick={convertCurrency}>Convert</button>
+      {result && (
+        <p>
+          Converted Amount: {result} {selectedCurrency.toUpperCase()}
+        </p>
+      )}
     </div>
   );
 }
-
-export default ExampleComponent;
+//
+export default CryptoConverter;
