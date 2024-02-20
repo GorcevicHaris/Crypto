@@ -4,6 +4,7 @@ import HomePage from "./Home/HomePage";
 import Header from "./Header/Header";
 import Context from "./Context/Context";
 import ChartPage from "./Chart/ChartPage";
+import Convertor from "./Convertor/Convertor";
 function App() {
   return (
     <BrowserRouter>
@@ -11,6 +12,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/convertor" element={<Convertor />} />
           <Route path="/chart/:coinName" element={<ChartPage />} />
         </Routes>
       </Context>

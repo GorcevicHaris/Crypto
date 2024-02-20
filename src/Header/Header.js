@@ -102,6 +102,14 @@ export default function Header() {
               Crytpo Tracker
             </p>
           </Typography>
+          <Typography variant="h6" noWrap component={"div"}>
+            <p
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/convertor")}
+            >
+              Convertor
+            </p>
+          </Typography>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

@@ -349,6 +349,8 @@ export default function ChartPage(product) {
   return (
     <div className="chartContainer">
       <div className="topChartsContainer" style={{ background: "black" }}>
+        <h1 style={{ color: "red" }}>aljshdlahsd</h1>
+
         <div className="lineChartContainer" style={{ width: "60%" }}>
           <Line
             data={lineChart}

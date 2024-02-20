@@ -35,8 +35,6 @@ export default function HomePage() {
       timePeriod = "5y";
     } else if (select === "3h") {
       timePeriod = "3h";
-    } else if (timePeriod === "3y") {
-      timePeriod = "3y";
     }
 
     axios
@@ -121,7 +119,6 @@ export default function HomePage() {
         <option value="30d">30d</option>
         <option value="3m">3m</option>
         <option value="1y">1y</option>
-        <option value="3y">3y</option>
         <option value="5y">5y</option>
       </select>
       ;
@@ -169,8 +166,6 @@ export default function HomePage() {
               <span>3m Change</span>
             ) : select === "1y" ? (
               <span>1y Change</span>
-            ) : select === "3y" ? (
-              <span>3y Change</span>
             ) : select === "5y" ? (
               <span>5y Change</span>
             ) : select === "24h" ? (

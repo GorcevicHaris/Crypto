@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+}
+.convertDiv{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+select{
+    width: 300px;
+    height: 45px;
+}
+input{
+    width: 300px;
+    height: 45px;
+}
+.inputs{
+    display: flex;
+    gap: 10px;
+}
+.equals{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+.centerDiv{
+    width: 40%;
+    height: 30%;
+}
