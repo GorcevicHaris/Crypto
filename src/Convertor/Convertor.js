@@ -17,7 +17,9 @@ export default function Convertor() {
     if (selectedCoin && input !== "") {
       const priceSelectedCurrency =
         selectedCurrency === "EUR"
-          ? selectedCoin.price * 0.9 * input
+          ? selectedCoin.price * 0.9
+          : selectedCurrency === "GBP"
+          ? selectedCoin.price * 0.78 * input
           : selectedCoin.price;
       setTotalValue(priceSelectedCurrency * input);
     }
@@ -80,6 +82,7 @@ export default function Convertor() {
           >
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
           </select>
         </div>
       </div>
