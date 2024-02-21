@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./convertor.css";
 import axios from "axios";
-
 export default function Convertor() {
   const [data, setData] = useState([]);
-  const [select, setSelect] = useState(51200); // Inicijalna vrednost za BTC
-  const [inputValue, setInputValue] = useState("");
-  const [convertedValue, setConvertedValue] = useState("");
-
+  const [select, setSelect] = useState(52000);
+  const [total, setTotal] = useState(0);
+  const [input, setInput] = useState("");
   function getData() {
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
           referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: "24h",
+          timePeriod: "24h", //time period ce biti neki podaci njihovi koje cemo koristiti kao stejt ali sa nekim podacima kao sto su 24h,3d itd
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
@@ -30,24 +28,22 @@ export default function Convertor() {
         setData(response.data.data.coins);
       });
   }
-
   useEffect(() => {
     getData();
-    setConvertedValue(select * inputValue);
-  }, [select, inputValue]);
-
+    setTotal(input * select);
+  }, [input, select]);
   return (
     <div className="convertDiv">
       <div className="centerDiv">
         <div className="inputs">
           <input
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
             type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <select value={select}>
-            <option onChange={(e) => setSelect(e.target.value)} value={51200}>
-              BTC
+          ></input>
+          <select>
+            <option value={51200} onChange={(e) => setSelect(e.target.value)}>
+              Btc
             </option>
           </select>
         </div>
@@ -55,7 +51,7 @@ export default function Convertor() {
           <h1 style={{ color: "black" }}>=</h1>
         </div>
         <div className="inputs">
-          <input type="number" value={convertedValue} readOnly />
+          <input value={totalValue} type="number" readOnly></input>
           <select>
             <option>hi</option>
           </select>
