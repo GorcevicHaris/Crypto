@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./convertor.css";
 import axios from "axios";
+
 export default function Convertor() {
-  const [data, setData] = useState([]);
-  const [select, setSelect] = useState(52000);
-  const [total, setTotal] = useState(0);
+  const [coins, setCoins] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
   const [input, setInput] = useState("");
-  function getData() {
+  const [selectedCoin, setSelectedCoin] = useState("");
+
+  useEffect(() => {
+    // Fetch data about coins
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
           referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: "24h", //time period ce biti neki podaci njihovi koje cemo koristiti kao stejt ali sa nekim podacima kao sto su 24h,3d itd
+          timePeriod: "24h",
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
@@ -25,36 +28,48 @@ export default function Convertor() {
         },
       })
       .then((response) => {
-        setData(response.data.data.coins);
+        setCoins(response.data.data.coins);
+      })
+      .catch((error) => {
+        console.error(error, "error in");
       });
-  }
+  }, []);
   useEffect(() => {
-    getData();
-    setTotal(input * select);
-  }, [input, select]);
+    // Calculate total value based on input and selected coin
+    if (selectedCoin && input !== "") {
+      setTotalValue(selectedCoin.price * parseFloat(input));
+    } else {
+      setTotalValue(0);
+    }
+  }, [input, selectedCoin]);
+
+  const handleInputChange = (event) => {
+    setInput(event.target.value);
+  };
+
+  const handleSelectChange = (event) => {
+    const selectedCoin = coins.find((coin) => coin.name === event.target.value);
+    setSelectedCoin(selectedCoin);
+  };
+
+  console.log(coins);
   return (
     <div className="convertDiv">
       <div className="centerDiv">
         <div className="inputs">
-          <input
-            onChange={(e) => setInput(e.target.value)}
-            value={input}
-            type="number"
-          ></input>
-          <select>
-            <option value={51200} onChange={(e) => setSelect(e.target.value)}>
-              Btc
-            </option>
+          <input onChange={handleInputChange} value={input} type="number" />
+          <select onChange={handleSelectChange}>
+            <option value="">Select Coin</option>
+            {coins.map((coin) => (
+              <option value={coin.name}>{coin.name}</option>
+            ))}
           </select>
         </div>
         <div className="equals">
           <h1 style={{ color: "black" }}>=</h1>
         </div>
         <div className="inputs">
-          <input value={totalValue} type="number" readOnly></input>
-          <select>
-            <option>hi</option>
-          </select>
+          <input value={totalValue} type="number" readOnly />
         </div>
       </div>
     </div>
