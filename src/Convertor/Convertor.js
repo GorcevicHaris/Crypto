@@ -3,13 +3,27 @@ import "./convertor.css";
 import axios from "axios";
 
 export default function Convertor() {
-  const [coins, setCoins] = useState([]);
+  const [data, setData] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
   const [input, setInput] = useState("");
-  const [selectedCoin, setSelectedCoin] = useState("");
+  const [selectedCoin, setSelectedCoin] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
 
   useEffect(() => {
-    // Fetch data about coins
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCoin && input !== "") {
+      const priceSelectedCurrency =
+        selectedCurrency === "EUR"
+          ? selectedCoin.price * 0.9 * input
+          : selectedCoin.price;
+      setTotalValue(priceSelectedCurrency * input);
+    }
+  }, [input, selectedCoin, selectedCurrency]);
+
+  function getData() {
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
@@ -28,40 +42,30 @@ export default function Convertor() {
         },
       })
       .then((response) => {
-        setCoins(response.data.data.coins);
-      })
-      .catch((error) => {
-        console.error(error, "error in");
+        setData(response.data.data.coins);
       });
-  }, []);
-  useEffect(() => {
-    // Calculate total value based on input and selected coin
-    if (selectedCoin && input !== "") {
-      setTotalValue(selectedCoin.price * parseFloat(input));
-    } else {
-      setTotalValue(0);
-    }
-  }, [input, selectedCoin]);
+  }
 
-  const handleInputChange = (event) => {
-    setInput(event.target.value);
-  };
-
-  const handleSelectChange = (event) => {
-    const selectedCoin = coins.find((coin) => coin.name === event.target.value);
+  function handleSelectCoin(event) {
+    const selectedCoin = data.find((coin) => coin.name === event.target.value);
     setSelectedCoin(selectedCoin);
-  };
+  }
 
-  console.log(coins);
   return (
     <div className="convertDiv">
       <div className="centerDiv">
         <div className="inputs">
-          <input onChange={handleInputChange} value={input} type="number" />
-          <select onChange={handleSelectChange}>
-            <option value="">Select Coin</option>
-            {coins.map((coin) => (
-              <option value={coin.name}>{coin.name}</option>
+          <input
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+            type="number"
+          ></input>
+          <select onChange={handleSelectCoin}>
+            <option>Pick the coin</option>
+            {data.map((coin) => (
+              <option key={coin.name} value={coin.name}>
+                {coin.name}
+              </option>
             ))}
           </select>
         </div>
@@ -69,7 +73,14 @@ export default function Convertor() {
           <h1 style={{ color: "black" }}>=</h1>
         </div>
         <div className="inputs">
-          <input value={totalValue} type="number" readOnly />
+          <input value={totalValue} type="number" readOnly></input>
+          <select
+            onChange={(e) => setSelectedCurrency(e.target.value)}
+            value={selectedCurrency}
+          >
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+          </select>
         </div>
       </div>
     </div>
