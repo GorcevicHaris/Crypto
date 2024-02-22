@@ -7,26 +7,47 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color: black;
+}
+.centerDiv{
+    margin-top: 100px;
+    height: 40%;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
 }
 select{
-    width: 300px;
+    width: 240px;
     height: 45px;
+    background-color: white;
+    color:black;
+    padding: 5px;
+    border-top-right-radius: 5px;
+    border: none;
+    border-top-right-radius: 5px;
+    background-color: rgb(242, 113, 38);
+    color: white;
+
 }
 input{
-    width: 300px;
+    width: 500px;
     height: 45px;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 0.1px solid white;
+    border-right: none;
+    font-size: 18px;
 }
 .inputs{
     display: flex;
-    gap: 10px;
 }
-.equals{
-    display: flex;
-    align-items: start;
-    justify-content: start;
-}
-.centerDiv{
-    width: 40%;
-    height: 30%;
+::placeholder{
+    color: white;
 }

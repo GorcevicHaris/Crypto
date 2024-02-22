@@ -8,7 +8,7 @@ export default function Convertor() {
   const [input, setInput] = useState("");
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState("EUR");
-
+  const [inputChanger, setInputChanger] = useState("");
   useEffect(() => {
     getData();
   }, []);
@@ -53,11 +53,27 @@ export default function Convertor() {
     setSelectedCoin(selectedCoin);
   }
 
+  console.log(data);
+
   return (
-    <div className="convertDiv">
+    <div
+      style={{ backgroundImage: `url(${"bitcoin-what-is-crypto-scaled.jpg"})` }}
+      className="convertDiv"
+    >
+      <h1
+        style={{
+          fontSize: "80px",
+          letterSpacing: "8px",
+          fontFamily: "cursive",
+          fontWeight: "100",
+        }}
+      >
+        Convertor
+      </h1>
       <div className="centerDiv">
         <div className="inputs">
           <input
+            placeholder="search"
             onChange={(e) => setInput(e.target.value)}
             value={input}
             type="number"
@@ -67,6 +83,7 @@ export default function Convertor() {
             {data.map((coin) => (
               <option key={coin.name} value={coin.name}>
                 {coin.name}
+                <img src={coin.iconUrl}></img>
               </option>
             ))}
           </select>
@@ -75,7 +92,11 @@ export default function Convertor() {
           <h1 style={{ color: "black" }}>=</h1>
         </div>
         <div className="inputs">
-          <input value={totalValue} type="number" readOnly></input>
+          <input
+            onChange={(e) => setInputChanger(e.target.value)}
+            value={totalValue}
+            type="number"
+          ></input>
           <select
             onChange={(e) => setSelectedCurrency(e.target.value)}
             value={selectedCurrency}
