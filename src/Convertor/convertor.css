@@ -31,7 +31,7 @@ select{
     border-top-right-radius: 5px;
     background-color: rgb(242, 113, 38);
     color: white;
-
+    font-size: 15px;
 }
 input{
     width: 500px;
@@ -43,7 +43,7 @@ input{
     border-bottom-left-radius: 5px;
     border: 0.1px solid white;
     border-right: none;
-    font-size: 18px;
+    font-size: 15px;
 }
 .inputs{
     display: flex;
