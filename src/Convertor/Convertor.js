@@ -55,6 +55,10 @@ export default function Convertor() {
 
   console.log(data);
 
+  function onSelectedCurrency(e) {
+    setSelectedCurrency(e.target.value);
+  }
+
   return (
     <div
       style={{ backgroundImage: `url(${"bitcoin-what-is-crypto-scaled.jpg"})` }}
@@ -92,15 +96,8 @@ export default function Convertor() {
           <h1 style={{ color: "black" }}>=</h1>
         </div>
         <div className="inputs">
-          <input
-            onChange={(e) => setInputChanger(e.target.value)}
-            value={totalValue}
-            type="number"
-          ></input>
-          <select
-            onChange={(e) => setSelectedCurrency(e.target.value)}
-            value={selectedCurrency}
-          >
+          <input value={totalValue} type="number"></input>
+          <select onChange={onSelectedCurrency} value={selectedCurrency}>
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
             <option value="GBP">GBP</option>

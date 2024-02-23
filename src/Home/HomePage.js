@@ -22,7 +22,7 @@ export default function HomePage() {
   };
 
   function getCoins() {
-    let timePeriod = "24h";
+    let timePeriod = "3h";
     if (select === "30d") {
       timePeriod = "30d";
     } else if (select === "7d") {
@@ -33,15 +33,15 @@ export default function HomePage() {
       timePeriod = "1y";
     } else if (select === "5y") {
       timePeriod = "5y";
-    } else if (select === "3h") {
-      timePeriod = "3h";
+    } else if (select === "24h") {
+      timePeriod = "24h";
     }
 
     axios
       .get(`https://coinranking1.p.rapidapi.com/coins`, {
         params: {
           referenceCurrencyUuid: "yhjMzLPhuIDl",
-          timePeriod: timePeriod, //time period ce biti neki podaci njihovi koje cemo koristiti kao stejt ali sa nekim podacima kao sto su 24h,3d itd
+          timePeriod: timePeriod,
           "tiers[0]": "1",
           orderBy: "marketCap",
           orderDirection: "desc",
