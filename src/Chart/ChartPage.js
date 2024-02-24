@@ -348,9 +348,11 @@ export default function ChartPage(product) {
   console.log(state, "state");
   return (
     <div className="chartContainer">
+      <div className="topOfTop">
+        {state.name}
+        <img style={{ width: "50px" }} src={state.iconUrl}></img>
+      </div>
       <div className="topChartsContainer" style={{ background: "black" }}>
-        <h1 style={{ color: "red" }}>aljshdlahsd</h1>
-
         <div className="lineChartContainer" style={{ width: "60%" }}>
           <Line
             data={lineChart}

@@ -30,4 +30,14 @@
     padding: 10px;
   }
   
-  
+  .topOfTop{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 40px;
+    background-color: rgb(15, 14, 14);
+    width: 100%;
+    border-bottom: 1px solid white;
+    color: white;
+  }
