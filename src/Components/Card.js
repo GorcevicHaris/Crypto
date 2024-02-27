@@ -29,7 +29,6 @@ function Card({ coin, index }) {
 
       <div className="same">
         <p>
-          {/*  */}
           {selectedCurrency === "USD"
             ? `$ ${parseFloat(coin.price).toFixed(1)}`
             : selectedCurrency === "EUR"
