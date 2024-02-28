@@ -26,7 +26,7 @@ function Card({ coin, index }) {
         <img src={coin.iconUrl} alt={coin.name} />
         <h3>{coin.name}</h3>
       </div>
-
+      {/*  */}
       <div className="same">
         <p>
           {selectedCurrency === "USD"
